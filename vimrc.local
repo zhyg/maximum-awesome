@@ -10,7 +10,7 @@ let tlist_php_settings = 'php;c:class;d:constant;f:function'
 
 set mouse-=a
 set nocursorline " don't highlight current line
-set pastetoggle=<F9>
+set pastetoggle=<F2>
 
 " keyboard shortcuts
 inoremap jj <ESC>
