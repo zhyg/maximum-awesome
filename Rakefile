@@ -35,7 +35,7 @@ def brew_cask_install(package, *options)
   output = `brew cask info #{package}`
   return unless output.include?('Not installed')
 
-  sh "brew cask install --binarydir=#{`brew --prefix`.chomp}/bin #{package} #{options.join ' '}"
+  sh "brew cask install #{package} #{options.join ' '}"
 end
 
 def step(description)
@@ -124,15 +124,6 @@ namespace :install do
     step 'Homebrew'
     unless system('which brew > /dev/null || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"')
       raise "Homebrew must be installed before continuing."
-    end
-  end
-
-  desc 'Install Homebrew Cask'
-  task :brew_cask do
-    step 'Homebrew Cask'
-    system('brew untap phinze/cask') if system('brew tap | grep phinze/cask > /dev/null')
-    unless system('brew tap | grep caskroom/cask > /dev/null') || system('brew tap caskroom/cask')
-      abort "Failed to tap caskroom/cask in Homebrew."
     end
   end
 
@@ -229,7 +220,6 @@ LINKED_FILES = filemap(
 desc 'Install these config files.'
 task :install do
   Rake::Task['install:brew'].invoke
-  Rake::Task['install:brew_cask'].invoke
   Rake::Task['install:the_silver_searcher'].invoke
   Rake::Task['install:iterm'].invoke
   Rake::Task['install:ctags'].invoke
